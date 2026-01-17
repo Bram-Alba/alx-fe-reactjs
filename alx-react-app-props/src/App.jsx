@@ -1,22 +1,14 @@
-import Header from './components/Header';
-import UserProfile from './components/UserProfile';
-import MainContent from './components/MainContent';
-import Footer from './components/Footer';
-import Counter from './components/Counter';
-
+import React from "react";
+import UserProfile from "./components/UserProfile";
+import UserContext from "./UserContext";
 
 function App() {
+  const userData = { name: "Jane Doe", email: "jane.doe@example.com" };
+
   return (
-    <>
-      <Header />
-      import Counter from './components/Counter';
-      
-      {/* At least one UserProfile immediately after header */}
-      <UserProfile name="Alice" age={25} bio="Loves hiking and photography" />
-      
-      <MainContent />
-      <Footer />
-    </>
+    <UserContext.Provider value={userData}>
+      <UserProfile />
+    </UserContext.Provider>
   );
 }
 
