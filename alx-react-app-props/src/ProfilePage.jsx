@@ -1,8 +1,7 @@
-import UserInfo from "./components/UserInfo";
+import UserInfo from './UserInfo';
 
-function ProfilePage() {
-  return <UserInfo />;
+function ProfilePage({ userData }) {
+  return <UserInfo userData={userData} />;
 }
 
 export default ProfilePage;
-
