@@ -1,10 +1,12 @@
+import './App.css'
+
 function App() {
   return (
     <div>
       <h1>GitHub User Search</h1>
-      <p>Search for GitHub profiles</p>
+      <p>Project setup complete!</p>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
