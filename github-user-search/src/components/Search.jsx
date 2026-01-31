@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { fetchAdvancedUsers } from "../services/githubService";
-
+import { fetchUserData } from "../services/githubService";
 function Search() {
   const [username, setUsername] = useState("");
   const [location, setLocation] = useState("");
@@ -20,7 +19,7 @@ function Search() {
     setUsers([]);
     setPage(1);
 
-    const data = await fetchAdvancedUsers({
+    const data = await fetchUserData({
       username,
       location,
       minRepos,

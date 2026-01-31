@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchAdvancedUsers = async ({
+export const fetchUserData = async ({ // <- renamed here
   username,
   location,
   minRepos,
