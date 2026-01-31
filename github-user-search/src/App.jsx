@@ -1,10 +1,11 @@
-import "./App.css";
 import Search from "./components/Search";
 
 function App() {
   return (
-    <div style={{ textAlign: "center", marginTop: "2rem" }}>
-      <h1>GitHub User Search</h1>
+    <div className="min-h-screen bg-gray-100">
+      <h1 className="text-3xl font-bold text-center pt-6">
+        GitHub User Search
+      </h1>
       <Search />
     </div>
   );
