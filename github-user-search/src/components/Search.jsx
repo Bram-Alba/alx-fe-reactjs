@@ -39,7 +39,7 @@ function Search() {
     const nextPage = page + 1;
     setPage(nextPage);
 
-    const data = await fetchAdvancedUsers({
+    const data = await fetchUserData({
       username,
       location,
       minRepos,
