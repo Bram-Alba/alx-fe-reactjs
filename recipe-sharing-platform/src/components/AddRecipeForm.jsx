@@ -3,14 +3,14 @@ import { useState } from "react";
 function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState(""); // renamed from instructions
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simple validation
-    if (!title || !ingredients || !instructions) {
+    // Validation
+    if (!title || !ingredients || !steps) {
       setError("All fields are required!");
       return;
     }
@@ -23,11 +23,10 @@ function AddRecipeForm() {
     // Reset error
     setError("");
 
-    // Normally here you'd send the data to a backend or state
     const newRecipe = {
       title,
       ingredients: ingredients.split(",").map((item) => item.trim()),
-      instructions: instructions.split("\n").map((line) => line.trim()),
+      steps: steps.split("\n").map((line) => line.trim()), // renamed
     };
 
     console.log("New Recipe Submitted:", newRecipe);
@@ -35,7 +34,7 @@ function AddRecipeForm() {
     // Clear form
     setTitle("");
     setIngredients("");
-    setInstructions("");
+    setSteps(""); // clear renamed field
   };
 
   return (
@@ -70,8 +69,8 @@ function AddRecipeForm() {
           <textarea
             className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="6"
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps} // renamed
+            onChange={(e) => setSteps(e.target.value)} // renamed
           ></textarea>
         </div>
 
