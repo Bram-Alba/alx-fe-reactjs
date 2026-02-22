@@ -1,26 +1,17 @@
 import { useState } from "react";
 
 function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const validate = () => {
     const newErrors = {};
-    if (!formData.username.trim()) newErrors.username = "Username is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    if (!formData.password.trim()) newErrors.password = "Password is required";
+    if (!username.trim()) newErrors.username = "Username is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (!password.trim()) newErrors.password = "Password is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -28,8 +19,10 @@ function RegistrationForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      alert(`Registered:\nUsername: ${formData.username}\nEmail: ${formData.email}`);
-      setFormData({ username: "", email: "", password: "" });
+      alert(`Registered:\nUsername: ${username}\nEmail: ${email}`);
+      setUsername("");
+      setEmail("");
+      setPassword("");
       setErrors({});
     }
   };
@@ -46,9 +39,8 @@ function RegistrationForm() {
           <label className="block mb-1 font-semibold">Username</label>
           <input
             type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
+            value={username}               // ✅ controlled
+            onChange={(e) => setUsername(e.target.value)} // ✅ updates state
             className="w-full p-2 border border-gray-300 rounded"
           />
           {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
@@ -58,9 +50,8 @@ function RegistrationForm() {
           <label className="block mb-1 font-semibold">Email</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}                  // ✅ controlled
+            onChange={(e) => setEmail(e.target.value)}    // ✅ updates state
             className="w-full p-2 border border-gray-300 rounded"
           />
           {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
@@ -70,9 +61,8 @@ function RegistrationForm() {
           <label className="block mb-1 font-semibold">Password</label>
           <input
             type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}               // ✅ controlled
+            onChange={(e) => setPassword(e.target.value)} // ✅ updates state
             className="w-full p-2 border border-gray-300 rounded"
           />
           {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
