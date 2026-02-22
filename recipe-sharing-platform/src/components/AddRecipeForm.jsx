@@ -3,45 +3,47 @@ import { useState } from "react";
 function AddRecipeForm() {
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [steps, setSteps] = useState(""); // renamed from instructions
-  const [error, setError] = useState("");
+  const [steps, setSteps] = useState("");
+  const [errors, setErrors] = useState({}); // renamed from error
+
+  // Validation function
+  const validate = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = "Title is required";
+    if (!ingredients) newErrors.ingredients = "Ingredients are required";
+    if (!steps) newErrors.steps = "Preparation steps are required";
+
+    if (ingredients.split(",").length < 2) {
+      newErrors.ingredients = "Please provide at least 2 ingredients";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // valid if no errors
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!title || !ingredients || !steps) {
-      setError("All fields are required!");
-      return;
-    }
+    if (!validate()) return; // stop if validation fails
 
-    if (ingredients.split(",").length < 2) {
-      setError("Please provide at least 2 ingredients separated by commas.");
-      return;
-    }
-
-    // Reset error
-    setError("");
-
+    // Reset form after successful validation
     const newRecipe = {
       title,
       ingredients: ingredients.split(",").map((item) => item.trim()),
-      steps: steps.split("\n").map((line) => line.trim()), // renamed
+      steps: steps.split("\n").map((line) => line.trim()),
     };
 
     console.log("New Recipe Submitted:", newRecipe);
 
-    // Clear form
     setTitle("");
     setIngredients("");
-    setSteps(""); // clear renamed field
+    setSteps("");
+    setErrors({});
   };
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold mb-4 text-center">Add New Recipe</h1>
-
-      {error && <p className="text-red-500 mb-4">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -52,6 +54,7 @@ function AddRecipeForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+          {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
         </div>
 
         <div>
@@ -62,6 +65,7 @@ function AddRecipeForm() {
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
           ></textarea>
+          {errors.ingredients && <p className="text-red-500 text-sm mt-1">{errors.ingredients}</p>}
         </div>
 
         <div>
@@ -69,9 +73,10 @@ function AddRecipeForm() {
           <textarea
             className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="6"
-            value={steps} // renamed
-            onChange={(e) => setSteps(e.target.value)} // renamed
+            value={steps}
+            onChange={(e) => setSteps(e.target.value)}
           ></textarea>
+          {errors.steps && <p className="text-red-500 text-sm mt-1">{errors.steps}</p>}
         </div>
 
         <button
