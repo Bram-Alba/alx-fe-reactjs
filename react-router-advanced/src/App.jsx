@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Post from "./pages/Post";
-import PostDetails from "./pages/PostDetails";
+import BlogPost from "./pages/BlogPost";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         />
 
         {/* Dynamic Route */}
-        <Route path="/posts/:id" element={<PostDetails />} />
+<Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/posts" element={<Post />} />
       </Routes>
     </BrowserRouter>
