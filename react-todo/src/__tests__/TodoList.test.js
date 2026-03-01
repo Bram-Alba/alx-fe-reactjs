@@ -25,7 +25,7 @@ test('renders TodoList component with initial todos', () => {
 test('allows user to add a new todo', () => {
   render(<TodoList />);
 
-   /*
+   
   const inputElement = screen.getByPlaceholderText('Add new todo');
   const addButton = screen.getByRole('button', { name: /add todo/i });
 
@@ -33,7 +33,7 @@ test('allows user to add a new todo', () => {
   fireEvent.click(addButton);
 
   expect(screen.getByText('New Test Todo')).toBeInTheDocument();
-  */
+  
 });
 
 // --- Test Toggling Todos ---
@@ -58,8 +58,6 @@ test('allows user to delete a todo', () => {
   expect(screen.getByText(todoTextToDelete)).toBeInTheDocument();
 
   // Find the delete button associated with this specific todo
-  // This assumes your delete button is inside the li and we can find it relative to the todo text
-  // A more robust way might be to give the button a test-id or an accessible name.
   const todoItem = screen.getByText(todoTextToDelete).closest('li');
   const deleteButton = todoItem.querySelector('button'); // Get the button inside the li
 

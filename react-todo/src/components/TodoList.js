@@ -1,46 +1,73 @@
-// src/components/TodoList.js
-import React, { useState } from 'react'; // <--- Make sure React and useState are imported
+import React, { useState } from 'react';
 
-const TodoList = () => { // <--- This is your component function
+const TodoList = () => {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Learn React Hooks', completed: false },
-    { id: 2, text: 'Build a Todo App', completed: true },
+    { id: 2, text: 'Build a Todo App', completed: false },
     { id: 3, text: 'Write comprehensive tests', completed: false },
   ]);
 
-  const addTodo = (text) => {
-    const newTodo = {
-      id: Date.now(),
-      text,
-      completed: false,
-    };
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
+  const [newTodo, setNewTodo] = useState('');
+
+  const handleAddTodo = (e) => {
+    e.preventDefault();
+    if (!newTodo.trim()) return;
+
+    setTodos([
+      ...todos,
+      { id: Date.now(), text: newTodo, completed: false }
+    ]);
+
+    setNewTodo('');
   };
 
   const toggleTodo = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    setTodos(
+      todos.map(todo =>
+        todo.id === id
+          ? { ...todo, completed: !todo.completed }
+          : todo
       )
     );
   };
 
   const deleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    setTodos(todos.filter(todo => todo.id !== id));
   };
 
   return (
     <div>
       <h1>My Todo List</h1>
+
+      <form onSubmit={handleAddTodo}>
+        <input
+          type="text"
+          placeholder="Add new todo"
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+
       <ul>
-        {todos.map((todo) => (
+        {todos.map(todo => (
           <li
             key={todo.id}
-            style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
             onClick={() => toggleTodo(todo.id)}
+            style={{
+              textDecoration: todo.completed ? 'line-through' : 'none',
+              cursor: 'pointer'
+            }}
           >
             {todo.text}
-            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>Delete</button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteTodo(todo.id);
+              }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
@@ -48,4 +75,4 @@ const TodoList = () => { // <--- This is your component function
   );
 };
 
-export default TodoList; // <--- THIS LINE IS CRUCIAL
+export default TodoList;
