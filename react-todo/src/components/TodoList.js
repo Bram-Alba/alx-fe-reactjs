@@ -1,5 +1,28 @@
 import React, { useState } from 'react';
-import AddTodoForm from "./AddTodoForm";
+
+// Optional: you can also put TodoItem in its own file
+function TodoItem({ todo, onToggle, onDelete }) {
+  return (
+    <li
+      onClick={() => onToggle(todo.id)}
+      style={{
+        textDecoration: todo.completed ? "line-through" : "none",
+        cursor: "pointer"
+      }}
+    >
+      {todo.text}
+      <button
+        onClick={(e) => {
+          e.stopPropagation(); // prevent li onClick from firing
+          onDelete(todo.id);
+        }}
+      >
+        Delete
+      </button>
+    </li>
+  );
+}
+
 const TodoList = () => {
   const [todos, setTodos] = useState([
     { id: 1, text: 'Learn React Hooks', completed: false },
@@ -13,20 +36,14 @@ const TodoList = () => {
     e.preventDefault();
     if (!newTodo.trim()) return;
 
-    setTodos([
-      ...todos,
-      { id: Date.now(), text: newTodo, completed: false }
-    ]);
-
+    setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
     setNewTodo('');
   };
 
   const toggleTodo = (id) => {
     setTodos(
       todos.map(todo =>
-        todo.id === id
-          ? { ...todo, completed: !todo.completed }
-          : todo
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
@@ -50,25 +67,13 @@ const TodoList = () => {
       </form>
 
       <ul>
-        {todos.map(todo => (
-          <li
+        {todos.map((todo) => (
+          <TodoItem
             key={todo.id}
-            onClick={() => toggleTodo(todo.id)}
-            style={{
-              textDecoration: todo.completed ? 'line-through' : 'none',
-              cursor: 'pointer'
-            }}
-          >
-            {todo.text}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteTodo(todo.id);
-              }}
-            >
-              Delete
-            </button>
-          </li>
+            todo={todo}
+            onToggle={toggleTodo}
+            onDelete={deleteTodo}
+          />
         ))}
       </ul>
     </div>
